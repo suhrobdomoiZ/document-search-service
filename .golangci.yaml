@@ -1,0 +1,62 @@
+version: "2"
+
+linters:
+  default: all
+  disable:
+    - wsl
+    - depguard
+    - wrapcheck
+    - ireturn
+    - exhaustruct
+    - dupl
+  settings:
+    revive:
+      enable-default-rules: true
+      rules:
+        - name: package-comments
+          disabled: true
+        - name: exported
+          arguments:
+            - "check-private-receivers"
+            - "say-repetitive-instead-of-stutters"
+            - "disable-checks-on-constants"
+            - "disable-checks-on-functions"
+            - "disable-checks-on-methods"
+            - "disable-checks-on-types"
+            - "disable-checks-on-variables"
+    tagliatelle:
+      case:
+        rules:
+          json: snake
+    cyclop:
+      max-complexity: 25
+    funlen:
+      lines: 200
+      statements: 100
+    gocognit:
+      min-complexity: 50
+    gosec:
+      excludes:
+        - G706
+        - G304
+        - G305
+
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - golines
+    - swaggo
+  settings:
+    gofumpt:
+      module-path: github.com/suhrobdomoiZ/yadro-test-2026
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  uniq-by-line: false
+
+run:
+  allow-parallel-runners: true
