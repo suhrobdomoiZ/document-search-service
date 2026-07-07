@@ -8,6 +8,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/config"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/es"
+	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/repository"
+	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/seed"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/migrations"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/pkg/closer"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/pkg/logger"
@@ -64,4 +66,31 @@ func main() {
 	appCloser.Add("es", esClient.Close)
 
 	appLogger.Info("main: connected to elasticsearch", "address", appConfig.EsConfig.Address())
+
+	const esIndexName = "documents"
+	appLogger.Info("main: ensuring es index exists...", "index", esIndexName)
+
+	err = esClient.CreateIndex(ctx, esIndexName)
+	if err != nil {
+		appLogger.Error("main: failed to create es index", "error", err)
+		os.Exit(1)
+	}
+
+	seedRepo := repository.NewSeed(pool)
+
+	appLogger.Info("main: starting seeder...")
+
+	err = seed.Run(
+		ctx,
+		appLogger,
+		seedRepo,
+		esClient,
+		appConfig.SeedConfig.DataPath(),
+	)
+	if err != nil {
+		appLogger.Error("main: seeding failed", "error", err)
+		os.Exit(1)
+	}
+
+	appLogger.Info("main: seeder finished successfully")
 }

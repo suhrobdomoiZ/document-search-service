@@ -19,4 +19,6 @@ const (
 
 	EsPort       configkey.Key = "ES_PORT"
 	EsSearchSize configkey.Key = "ES_SEARCH_SIZE"
+
+	DataPath configkey.Key = "DATA_PATH"
 )
