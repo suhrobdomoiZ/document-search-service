@@ -7,6 +7,7 @@ type AppConfig struct {
 	DbConfig      *PostgresConfig
 	TimeoutConfig *TimeoutConfig
 	EsConfig      *EsConfig
+	SeedConfig    *SeedConfig
 }
 
 func NewAppConfig() *AppConfig {
@@ -19,6 +20,7 @@ func NewAppConfig() *AppConfig {
 		DbConfig:      NewPostgresConfig(),
 		TimeoutConfig: NewTimeoutConfig(),
 		EsConfig:      NewESConfig(),
+		SeedConfig:    NewSeedConfig(),
 	}
 }
 
