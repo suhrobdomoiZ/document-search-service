@@ -13,3 +13,8 @@ type ISeedRepository interface {
 		doc *models.DocumentWithoutID,
 	) (*models.CreateDocumentResponse, error)
 }
+
+type IDocumentsRepository interface {
+	GetByIDs(ctx context.Context, ids []int) ([]models.FullDocument, error)
+	DeleteDocument(ctx context.Context, id int) error
+}

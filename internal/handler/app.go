@@ -1,3 +1,5 @@
 package handler
 
-type App struct{}
+type AppHandler struct {
+	documentsHandler
+}
