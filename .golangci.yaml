@@ -51,6 +51,7 @@ linters:
         - r
         - ctx
         - ok
+        - wg
 
 formatters:
   enable:
