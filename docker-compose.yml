@@ -1,20 +1,39 @@
+version: '3.8'
+
 services:
   database:
-    image: postgres:18-alpine
+    image: postgres:17-alpine
     container_name: db
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
-
-    command: -p ${DATABASE_PORT}
     ports:
-      - "5432:${DATABASE_PORT}"
+      - "${DATABASE_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME} -p ${DATABASE_PORT}" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}" ]
       interval: 2s
       timeout: 5s
       retries: 10
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "${ES_PORT}:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsSL http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 15
 
   app:
     build:
@@ -24,15 +43,26 @@ services:
     ports:
       - "${HTTP_PORT}:8080"
     environment:
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_NAME: ${DATABASE_NAME}
+
+      ES_ADDRESS: http://elasticsearch:9200
+      ES_PORT: ${ES_PORT}
+      ES_SEARCH_SIZE: ${ES_SEARCH_SIZE}
+
       HTTP_PORT: ${HTTP_PORT}
       ENV_TYPE: ${ENV_TYPE}
     depends_on:
       database:
         condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
     volumes:
       - ./data:/app/data
+
+volumes:
+  postgres_data:
+  es_data:

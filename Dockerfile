@@ -17,6 +17,4 @@ WORKDIR /app
 
 COPY --from=builder /app/main .
 
-RUN mkdir -p /app/data
-
 CMD ["./main"]
