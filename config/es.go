@@ -18,7 +18,7 @@ func NewESConfig() *EsConfig {
 		searchSize = DefaultSearchSize
 	}
 
-	return &EsConfig{address: "http://localhost:" + port, searchSize: searchSize}
+	return &EsConfig{address: "http://elasticsearch:" + port, searchSize: searchSize}
 }
 
 func (c *EsConfig) Address() string {

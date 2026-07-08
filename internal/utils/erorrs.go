@@ -1,8 +1,8 @@
 package utils
 
-import "fmt"
+import "errors"
 
 var (
-	ErrNoContent           error = fmt.Errorf("no content found")
-	ErrInternalServerError error = fmt.Errorf("internal server error")
+	ErrNotFound            = errors.New("no content found")
+	ErrInternalServerError = errors.New("internal server error")
 )

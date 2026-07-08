@@ -186,6 +186,27 @@ func (c *Client) SearchDocuments(
 	return ids, nil
 }
 
+func (c *Client) DeleteDocument(ctx context.Context, indexName string, id int) error {
+	req := esapi.DeleteRequest{
+		Index:      indexName,
+		DocumentID: strconv.Itoa(id),
+		Refresh:    "true",
+	}
+
+	res, err := req.Do(ctx, c.es)
+	if err != nil {
+		return fmt.Errorf("es.DeleteDocument: error sending delete request: %w", err)
+	}
+
+	defer func() { _ = res.Body.Close() }()
+
+	if res.IsError() {
+		return fmt.Errorf("es.DeleteDocument: error delete response: %s", res.String())
+	}
+
+	return nil
+}
+
 func (c *Client) Close(ctx context.Context) error {
 	return c.es.Close(ctx)
 }

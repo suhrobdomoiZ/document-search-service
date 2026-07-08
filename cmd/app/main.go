@@ -10,6 +10,8 @@ import (
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/es"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/repository"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/seed"
+	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/server"
+	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/utils"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/migrations"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/pkg/closer"
 	"github.com/suhrobdomoiZ/anal-prog-decisions-test/pkg/logger"
@@ -67,10 +69,9 @@ func main() {
 
 	appLogger.Info("main: connected to elasticsearch", "address", appConfig.EsConfig.Address())
 
-	const esIndexName = "documents"
-	appLogger.Info("main: ensuring es index exists...", "index", esIndexName)
+	appLogger.Info("main: ensuring es index exists...", "index", utils.EsIndexName)
 
-	err = esClient.CreateIndex(ctx, esIndexName)
+	err = esClient.CreateIndex(ctx, utils.EsIndexName)
 	if err != nil {
 		appLogger.Error("main: failed to create es index", "error", err)
 		os.Exit(1)
@@ -93,4 +94,12 @@ func main() {
 	}
 
 	appLogger.Info("main: seeder finished successfully")
+
+	srv := server.NewServer(appConfig, appLogger, appCloser, pool, esClient)
+
+	err = srv.Start(ctx)
+	if err != nil {
+		srv.Logger.Error("main: failed to serve", "error", err.Error())
+		os.Exit(1)
+	}
 }
