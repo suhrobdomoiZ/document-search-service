@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/models"
+	"github.com/suhrobdomoiZ/document-search-service/internal/models"
 )
 
 type Seed struct {

@@ -12,11 +12,11 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/config"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/es"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/handler"
-	middleware "github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/midleware"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/pkg/closer"
+	"github.com/suhrobdomoiZ/document-search-service/config"
+	"github.com/suhrobdomoiZ/document-search-service/internal/es"
+	"github.com/suhrobdomoiZ/document-search-service/internal/handler"
+	middleware "github.com/suhrobdomoiZ/document-search-service/internal/midleware"
+	"github.com/suhrobdomoiZ/document-search-service/pkg/closer"
 )
 
 type Server struct {

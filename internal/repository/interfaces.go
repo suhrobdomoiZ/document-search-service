@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/models"
+	"github.com/suhrobdomoiZ/document-search-service/internal/models"
 )
 
 type ISeedRepository interface {

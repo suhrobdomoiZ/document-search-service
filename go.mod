@@ -1,4 +1,4 @@
-module github.com/suhrobdomoiZ/anal-prog-decisions-test
+module github.com/suhrobdomoiZ/document-search-service
 
 go 1.26.1
 

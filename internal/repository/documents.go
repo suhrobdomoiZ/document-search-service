@@ -5,8 +5,8 @@ import (
 	"log/slog"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/models"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/utils"
+	"github.com/suhrobdomoiZ/document-search-service/internal/models"
+	"github.com/suhrobdomoiZ/document-search-service/internal/utils"
 )
 
 type Documents struct {

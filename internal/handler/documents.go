@@ -8,9 +8,9 @@ import (
 	"strconv"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/es"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/service"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/utils"
+	"github.com/suhrobdomoiZ/document-search-service/internal/es"
+	"github.com/suhrobdomoiZ/document-search-service/internal/service"
+	"github.com/suhrobdomoiZ/document-search-service/internal/utils"
 )
 
 type documentsHandler struct {

@@ -1,6 +1,6 @@
 package config
 
-import "github.com/suhrobdomoiZ/anal-prog-decisions-test/pkg/configkey"
+import "github.com/suhrobdomoiZ/document-search-service/pkg/configkey"
 
 const (
 	HTTPServerPort configkey.Key = "HTTP_PORT"

@@ -4,7 +4,7 @@ import (
 	"log/slog"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/es"
+	"github.com/suhrobdomoiZ/document-search-service/internal/es"
 )
 
 type AppHandler struct {

@@ -10,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/es"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/models"
-	"github.com/suhrobdomoiZ/anal-prog-decisions-test/internal/repository"
+	"github.com/suhrobdomoiZ/document-search-service/internal/es"
+	"github.com/suhrobdomoiZ/document-search-service/internal/models"
+	"github.com/suhrobdomoiZ/document-search-service/internal/repository"
 )
 
 const esIndexName = "documents"
