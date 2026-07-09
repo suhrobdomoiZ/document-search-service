@@ -9,6 +9,7 @@ linters:
     - ireturn
     - exhaustruct
     - dupl
+    - err113
   settings:
     revive:
       enable-default-rules: true
@@ -40,6 +41,17 @@ linters:
         - G706
         - G304
         - G305
+        - G402
+    varnamelen:
+      ignore-names:
+        - id
+        - ids
+        - db
+        - w
+        - r
+        - ctx
+        - ok
+        - wg
 
 formatters:
   enable:
@@ -51,7 +63,7 @@ formatters:
     - swaggo
   settings:
     gofumpt:
-      module-path: github.com/suhrobdomoiZ/yadro-test-2026
+      module-path: github.com/suhrobdomoiZ/anal-prog-decisions-test
 
 issues:
   max-issues-per-linter: 0
