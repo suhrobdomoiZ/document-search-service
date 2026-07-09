@@ -30,14 +30,14 @@ func NewDocumentsService(
 	}
 }
 
-func (s *DocumentsService) Search(ctx context.Context, text string) ([]models.FullDocument, error) {
+func (s *DocumentsService) Search(ctx context.Context, text string) ([]models.Document, error) {
 	ids, err := s.esClient.SearchDocuments(ctx, utils.EsIndexName, text)
 	if err != nil {
 		return nil, err
 	}
 
 	if len(ids) == 0 {
-		return []models.FullDocument{}, nil
+		return []models.Document{}, nil
 	}
 
 	docs, err := s.repository.GetByIDs(ctx, ids)

@@ -18,9 +18,9 @@ func NewDocuments(pool *pgxpool.Pool, logger *slog.Logger) *Documents {
 	return &Documents{pool: pool, logger: logger}
 }
 
-func (r *Documents) GetByIDs(ctx context.Context, ids []int) ([]models.FullDocument, error) {
+func (r *Documents) GetByIDs(ctx context.Context, ids []int) ([]models.Document, error) {
 	if len(ids) == 0 {
-		return []models.FullDocument{}, nil
+		return []models.Document{}, nil
 	}
 
 	query := `
@@ -42,10 +42,10 @@ func (r *Documents) GetByIDs(ctx context.Context, ids []int) ([]models.FullDocum
 		rows.Close()
 	}()
 
-	var docs []models.FullDocument
+	var docs []models.Document
 
 	for rows.Next() {
-		var doc models.FullDocument
+		var doc models.Document
 
 		err = rows.Scan(&doc.ID, &doc.Text, &doc.Rubrics, &doc.CreatedDate)
 		if err != nil {

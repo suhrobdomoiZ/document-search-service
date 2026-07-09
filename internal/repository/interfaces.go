@@ -15,6 +15,6 @@ type ISeedRepository interface {
 }
 
 type IDocumentsRepository interface {
-	GetByIDs(ctx context.Context, ids []int) ([]models.FullDocument, error)
+	GetByIDs(ctx context.Context, ids []int) ([]models.Document, error)
 	DeleteDocument(ctx context.Context, id int) error
 }

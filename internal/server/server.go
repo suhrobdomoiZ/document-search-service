@@ -46,10 +46,10 @@ func (s *Server) Start(ctx context.Context) error {
 	mux.HandleFunc("GET /search", s.Handler.DocumentsHandler.ServeHTTP)
 	mux.HandleFunc("DELETE /documents/{id}", s.Handler.DocumentsHandler.ServeHTTP)
 
-	handler := middleware.LoggingMiddleware(mux)
+	appHandler := middleware.LoggingMiddleware(mux)
 	srv := &http.Server{
 		Addr:         ":" + s.Config.HTTPPort(),
-		Handler:      handler,
+		Handler:      appHandler,
 		ReadTimeout:  time.Duration(s.Config.TimeoutConfig.ServerReadTimeout()) * time.Second,
 		WriteTimeout: time.Duration(s.Config.TimeoutConfig.ServerWriteTimeout()) * time.Second,
 		IdleTimeout:  time.Duration(s.Config.TimeoutConfig.ServerIdleTimeout()) * time.Second,

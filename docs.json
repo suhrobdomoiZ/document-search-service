@@ -1,0 +1,173 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Document Search API",
+    "version": "1.0.0",
+    "description": "Простой поисковик по текстам документов с использованием Elasticsearch"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api/v1",
+      "description": "Локальный сервер разработки"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "summary": "Поиск документов",
+        "description": "Принимает текстовый запрос, ищет по тексту в эластике и возвращает первые 20 документов, упорядоченные по дате создания",
+        "tags": [
+          "documents"
+        ],
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "description": "Текстовый запрос",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Document"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}": {
+      "delete": {
+        "summary": "Удаление документа",
+        "description": "Удаляет документ из БД и индекса Elastic по id",
+        "tags": [
+          "documents"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID документа",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Документ успешно удален"
+          },
+          "400": {
+            "description": "Ошибка валидации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Документ не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Document": {
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "rubrics",
+          "created_date"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "text": {
+            "type": "string",
+            "example": "Слив информации на пассивки..."
+          },
+          "rubrics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "VK-1603736028819866",
+              "VK-11879320040"
+            ]
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2019-07-25T12:42:13Z"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "query param 'text' is required"
+          }
+        }
+      }
+    }
+  }
+}

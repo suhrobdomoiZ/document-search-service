@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type FullDocument struct {
+type Document struct {
 	ID          int       `json:"id"`
 	Text        string    `json:"text"`
 	Rubrics     []string  `json:"rubrics"`
