@@ -42,19 +42,12 @@ services:
     container_name: app
     ports:
       - "${HTTP_PORT}:8080"
+    env_file:
+      - .env
     environment:
       DATABASE_HOST: database
       DATABASE_PORT: 5432
-      DATABASE_USER: ${DATABASE_USER}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_NAME: ${DATABASE_NAME}
-
       ES_ADDRESS: http://elasticsearch:9200
-      ES_PORT: ${ES_PORT}
-      ES_SEARCH_SIZE: ${ES_SEARCH_SIZE}
-
-      HTTP_PORT: ${HTTP_PORT}
-      ENV_TYPE: ${ENV_TYPE}
     depends_on:
       database:
         condition: service_healthy
