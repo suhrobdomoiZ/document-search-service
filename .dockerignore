@@ -4,3 +4,5 @@
 .env
 .golangci.yaml
 .gitignore
+README.md
+docs.json
